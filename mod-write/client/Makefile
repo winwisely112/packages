@@ -3,7 +3,7 @@
 # https://github.com/memspace/zefyr
 
 LIB_NAME=zefyr
-LIB=github.com/memspace/$(LIB_NAME)
+LIB=github.com/winwisely112/$(LIB_NAME)
 LIB_BRANCH=master
 LIB_FSPATH=$(GOPATH)/src/$(LIB)
 
@@ -76,7 +76,8 @@ flu-desk-local-run: ## flu-desk-local-run
 
 flu-desk-local-build: ## flu-desk-local-build
 	# does not use docker
-	cd $(SAMPLE_FSPATH) && hover build
+	cd $(SAMPLE_FSPATH) && hover build linux
+	
 
 
 flu-desk-build-all: ## flu-desk-build-all
@@ -101,7 +102,7 @@ flu-desk-build:
 	cd $(SAMPLE_FSPATH) && hover build darwin
 	cd $(SAMPLE_FSPATH) && hover build windows
 	# broken: need to look into
-	#cd $(SAMPLE_FSPATH) && hover build linux
+	cd $(SAMPLE_FSPATH) && hover build linux
 
 flu-desk-buildrun: flu-desk-build
 
