@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: grpc-web
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - name: http2
     protocol: TCP
