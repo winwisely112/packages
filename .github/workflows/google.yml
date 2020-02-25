@@ -23,7 +23,6 @@ env:
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
-  GKE_CLUSTER: standard-cluster-1
   IMAGE: maintemplate
   REGISTRY_HOSTNAME: gcr.io
   DEPLOYMENT_NAME: maintemplate
@@ -91,6 +90,6 @@ jobs:
         ./kustomize build . | kubectl apply -f -
         kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
         kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
-        kubectl patch svc nginx-ingress-lb -p '{"spec": {"loadBalancerIP": "${{ secrets.GKE_IP }}"}}'
+        kubectl --namespace ingress-nginx patch svc ingress-nginx -p '{"spec": {"loadBalancerIP": "${{ secrets.GKE_IP }}"}}'
         kubectl get services -o wide
         echo ${{ secrets.GKE_IP }}
