@@ -59,19 +59,6 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
-      
-
-    - name: 'Ingress Controller'
-      uses: 'deliverybot/helm@v1'
-      with:
-        release: 'nginx-ingress'
-        namespace: 'default'
-        name: nginx-ingress
-        chart: 'stable/nginx-ingress'
-        token: '${{ github.token }}'
-        values: |
-          controller.publishService.enabled: true
-          controller.service.loadBalancerIP: ${{ secrets.GKE_KEY }}
         
     # Build the Docker image
     - name: Build
@@ -102,4 +89,7 @@ jobs:
         ./kustomize edit set image gcr.io/GKE_PROJECT/IMAGE:TAG=gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
         ./kustomize edit set image gcr.io/GKE_PROJECT/flutter-web-IMAGE:TAG=gcr.io/$GKE_PROJECT/flutter-web-$IMAGE:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+        kubectl patch svc nginx-ingress-lb -p '{"spec": {"loadBalancerIP": "${{ secrets.GKE_IP }}"}}'
         kubectl get services -o wide
