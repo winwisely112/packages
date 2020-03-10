@@ -28,7 +28,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: subosito/flutter-action@v1
       with:
-        channel: '$FLUTTER_CHANNEL'
+        channel: $FLUTTER_CHANNEL
 
     - run: flutter pub get
       working-directory: maintemplate/client/
@@ -59,7 +59,7 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" -f maintemplate/server/Dockerfile .
           
         sed -i s/\\?version\=#\{ref\}/?version=$GITHUB_SHA/g maintemplate/client/build/web/index.html
-        
+
         sed -i s/#\{channel_name\}/$CHANNEL_NAME/g maintemplate/client/assets/env.json
         sed -i s/#\{channel_url\}/$CHANNEL_URL/g maintemplate/client/assets/env.json
         sed -i s/#\{githash\}/$GITHUB_SHA/g maintemplate/client/assets/env.json
