@@ -30,7 +30,7 @@ jobs:
         ref: beta
     - uses: subosito/flutter-action@v1
       with:
-        channel: $FLUTTER_CHANNEL
+        channel: 'beta'
         
     - run: flutter pub get
       working-directory: maintemplate/client/

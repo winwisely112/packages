@@ -16,7 +16,7 @@ env:
   REGISTRY_HOSTNAME: gcr.io
   DEPLOYMENT_NAME: maintemplate
   RELEASE_CHANNEL: stable
-  FLUTTER_CHANNEL: dev
+  FLUTTER_CHANNEL: beta
   CHANNEL_URL: getcouragenow.org
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
         ref: stable
     - uses: subosito/flutter-action@v1
       with:
-        channel: $FLUTTER_CHANNEL
+        channel: 'beta'
 
     - run: flutter pub get
       working-directory: maintemplate/client/
